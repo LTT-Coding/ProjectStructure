@@ -18,3 +18,23 @@ $autoload = function($className) use($rootDir){
 };
 
 spl_autoload_register($autoload);
+
+$bundleDir = __DIR__ . '\\bundle';
+
+$bundleAutoload = function($className) use($bundleDir){   
+    $fileName = '';
+    
+    if ($lastNameSpacePosition = strpos($className, '\\')) {
+        $namespace = substr($className, 0, $lastNameSpacePosition);
+        $className = substr($className, $lastNameSpacePosition + 1);
+        $fileName = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
+    }
+    
+    $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className);
+
+    if (is_file($bundleDir . $fileName . '.php')) {
+        require_once $bundleDir . $fileName . '.php';
+    }
+};
+
+spl_autoload_register($bundleAutoload);
