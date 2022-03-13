@@ -1,7 +1,7 @@
 <?php
 $rootDir = __DIR__ . '\\';
 
-$autoload = function($className) use($rootDir){   
+$autoload = function($className) use($rootDir) {   
     $fileName = '';
     
     if ($lastNameSpacePosition = strpos($className, '\\')) {
@@ -11,9 +11,10 @@ $autoload = function($className) use($rootDir){
     }
     
     $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className);
+    $path = str_replace('\\', '/', $rootDir . $fileName . '.php');
 
-    if (is_file($rootDir . $fileName . '.php')) {
-        require_once $rootDir . $fileName . '.php';
+    if (is_file($path)) {
+        require_once $path;
     }
 };
 
@@ -21,7 +22,7 @@ spl_autoload_register($autoload);
 
 $bundleDir = __DIR__ . '\\bundle';
 
-$bundleAutoload = function($className) use($bundleDir){   
+$bundleAutoload = function($className) use($bundleDir) {   
     $fileName = '';
     
     if ($lastNameSpacePosition = strpos($className, '\\')) {
@@ -31,9 +32,10 @@ $bundleAutoload = function($className) use($bundleDir){
     }
     
     $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className);
+    $path = str_replace('\\', '/', $bundleDir . $fileName . '.php');
 
-    if (is_file($bundleDir . $fileName . '.php')) {
-        require_once $bundleDir . $fileName . '.php';
+    if (is_file($path)) {
+        require_once $path;
     }
 };
 
