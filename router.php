@@ -58,7 +58,7 @@ class Router
 
             array_shift($matches);
 
-            return call_user_func_array([new $options['controller'](), 'execute'], $matches);
+            return call_user_func_array([new $options['controller'](), 'execute'], [$matches, $_GET, $_POST]);
         }
 
         return call_user_func_array([new ErrorController(), 'execute'], [$options['errorPage']]);
