@@ -11,15 +11,16 @@ $autoload = function($className) use($rootDir){
     }
     
     $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className);
+    $path = str_replace('\\', '/', $rootDir . $fileName . '.php');
 
-    if (is_file($rootDir . $fileName . '.php')) {
-        require_once $rootDir . $fileName . '.php';
+    if (is_file($path)) {
+        require_once $path;
     }
 };
 
 spl_autoload_register($autoload);
 
-$bundleDir = __DIR__ . '\\bundle';
+$bundleDir = __DIR__ . '\\bundles';
 
 $bundleAutoload = function($className) use($bundleDir){   
     $fileName = '';
